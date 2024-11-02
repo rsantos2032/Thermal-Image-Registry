@@ -1,0 +1,45 @@
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+Photo #,Photo ID,Building Name,Latitude,Longitude,Side of Building,Time (24h),Observed Temp (C),Min Temp (C),Max Temp (C),Framed Properly?,Distance (m),Outdoor Temp,Sun Direction,Indoor / Outdoor,Floor
+24,RCH1,Cuneo Hall,N 41°59'56.0985,W 87°39'26.47830,West,10/1/2024 14:27:00,36.8,20.5,65.4,Yes,10,18.8,West,Outdoor,Ground Level
+25,RCH2,Cuneo Hall,N 41°59'53.388,W 87°39'27.4881,South,10/1/2024 14:29:00,40.7,17.5,40.7,Door,10,18.8,West,Outdoor,Ground Level
+26,RCH3,Cuneo Hall,N 41°59'58.131,W 87°39'27.0531,East,10/1/2024 14:31:00,16.6,22.4,9.4,Door,10,18.8,West,Outdoor,Ground Level
+27,RDH1,Dumbach Hall,N 42°0'0.9663,W 87°39'28.3234,South,10/1/2024 14:33:00,38.4,22.5,61.5,Door,10,18.8,West,Outdoor,Ground Level
+28,RDH2,Dumbach Hall,N 42°0'1.6556,W 87°39'27.7632,East,10/1/2024 14:34:00,12.4,11.7,22.1,Door,10,18.8,West,Outdoor,Ground Level
+29,RDH3,Dumbach Hall,N 42°0'2.4668,W 87°39'28.5547,North,10/1/2024 14:36:00,18.7,10.4,19.7,Yes,10,18.8,West,Outdoor,Ground Level
+30,CH14,Cuneo Hall,N 41°59'58.2731,"W 87°39'26.08776""",North,10/3/2024 15:52:00,29.6,16,31.9,Door,10,20,West,Outdoor,Ground Level
+31,CH16,Cuneo Hall,N 41°59'56.33484,"W 87°39'26.08776""",West,10/3/2024 15:56:00,20.9,14.9,40.3,Yes,10,20,West,Outdoor,Ground Level
+32,CH17,Cuneo Hall,N 41°59'56.33485,"W 87°39'26.08776""",West,10/3/2024 15:57:00,36.8,30.1,83.4,Open Window,10,20,West,Outdoor,Ground Level
+33,CH18,Cuneo Hall,N 41°59'56.33486,"W 87°39'26.08776""",West,10/3/2024 15:57:00,33.1,23.4,51.6,Yes,10,20,West,Outdoor,Ground Level
+34,CH20,Cuneo Hall,N 41°59'56.80690,"W 87°39'27.64810""",West,10/3/2024 15:57:00,41.7,36,69,Yes,10,20,West,Outdoor,Ground Level
+35,CH19,Cuneo Hall,N 41°59'56.11330,"W 87°39'26.62140""",West,10/3/2024 15:58:00,19.4,18.2,30.5,Yes,10,20,West,Outdoor,Ground Level
+36,CH15,Cuneo Hall,"N 41°59'55.56516""","W 87°39'25.40016""",South,10/3/2024 16:00:00,36.3,19.8,46,Door,10,20,West,Outdoor,Ground Level
+37,CH21,Cuneo Hall,"N 41°59'56.29680""","W 87°39'25.24560""",South,10/3/2024 16:00:00,36.4,19.7,45.8,Door,10,20,West,Outdoor,Ground Level
+38,DH11,Dumbach Hall,"N 42°0'2.36736""","W 87°39'28.41912""",North,10/3/2024 18:45:00,17.3,11.5,26.2,Door,10,18,Dark,Outdoor,Ground Level
+39,DH13,Dumbach Hall,"N 42°0'2.00988""","W 87°39'28.251""",North,10/3/2024 18:46:00,13,12.6,17.8,Yes,10,18,Dark,Outdoor,Ground Level
+40,DH14,Dumbach Hall,"N 42°0'2.00988""","W 87°39'28.251""",North,10/3/2024 18:47:00,12.1,11.8,17,Yes,10,18,Dark,Outdoor,Ground Level
+41,DH15,Dumbach Hall,N 42°0'2.385,W 87°39'28.4652,North,10/3/2024 18:47:00,15.1,14,20.2,Yes,10,18,Dark,Outdoor,Ground Level
+42,DH12,Dumbach Hall,N 42°0'0.63480,W 87°39'27.608,South,10/3/2024 18:48:00,16.9,13.5,18.1,Door,10,18,Dark,Outdoor,Ground Level
+43,CH22,Cuneo Hall,"N 41°59'57.84310""","W 87°39'27.20540""",North,10/3/2024 18:52:00,17.4,9.9,20,Door,10,18,Dark,Outdoor,Ground Level
+44,CH24,Cuneo Hall,"N 41°59'56.11680""","W 87°39'26.62140""",West,10/3/2024 18:54:00,18.2,16.9,30,Open Window,10,18,Dark,Outdoor,Ground Level
+45,CH23,Cuneo Hall,"N 41°59'56.29680""","W 87°39'25.24560""",South,10/3/2024 18:55:00,21.2,12.6,28.1,Door,10,18,Dark,Outdoor,Ground Level
+46,CH25,Cuneo Hall,"N 41°59'56.14140""","W 87°39'26.66260""",West,10/3/2024 18:55:00,17.1,12.6,30,Open Window,10,18,Dark,Outdoor,Ground Level
+47,RCH4,Cuneo Hall,N 41°59'58.6959,"W 87°39'26.68310""",East,10/9/2024 14:21:00,14,8.9,19.9,Door,10,18.9,West,Outdoor,Ground Level
+48,RCH5,Cuneo Hall,N 41°59'55.9700,"W 87°39'25.33500""",South,10/9/2024 14:23:00,39.8,25.9,56.3,Door,10,18.9,West,Outdoor,Ground Level
+49,RCH6,Cuneo Hall,N 41°59'56.5415,"W 87°39'26.37320""",West,10/9/2024 14:25:00,25.5,15.4,57.2,Yes,10,18.9,West,Outdoor,Ground Level
+50,RCH7,Cuneo Hall,N 41°59'57.785,"W 87°39'26.7607""",North,10/9/2024 14:27:00,20.4,12.3,27.3,Door,10,18.9,West,Outdoor,Ground Level
+51,RDH4,Dumbach Hall,N 42°0'1.35320,"W 87°39'27.5777""",East,10/9/2024 14:29:00,16.1,12.9,21.7,Door,10,18.9,West,Outdoor,Ground Level
+52,RDH5,Dumbach Hall,N 42°0'2.4434,"W 87°39'28.2969""",North,10/9/2024 14:21:00,15.5,9.6,18.3,Yes,10,18.9,West,Outdoor,Ground Level
+53,DH16,Dumbach Hall,"N 42°0'2.36736""","W 87°39'28.41912""",South,10/17/2024 18:30:00,12.5,4.5,18.7,Door,10,15.6,Dark,Outdoor,Ground Level
+54,DH17,Dumbach Hall,"N 42°0'2.00988""","W 87°39'28.251""",North,10/17/2024 18:33:00,11.5,4.9,17.6,Yes,10,15.6,Dark,Outdoor,Ground Level
+55,DH18,Dumbach Hall,"N 42°0'2.00988""","W 87°39'28.251""",North,10/17/2024 18:33:00,11,5.8,16.7,Yes,10,15.6,Dark,Outdoor,Ground Level
+56,DH19,Dumbach Hall,N 42°0'2.385,W 87°39'28.4652,North,10/17/2024 18:34:00,10.4,7.6,12.2,Yes,10,15.6,Dark,Outdoor,Ground Level
+57,DH20,Dumbach Hall,N 42°0'0.63480,W 87°39'27.608,North,10/17/2024 18:35:00,10.2,2.5,11.2,Yes,10,15.6,Dark,Outdoor,Ground Level
+58,DH21,Dumbach Hall,N 42°0'0.63480,W 87°39'27.608,South,10/17/2024 18:35:00,13,6.3,13.9,Door,10,15.6,Dark,Outdoor,Ground Level
+59,RCH8,Cuneo Hall,N 41°59'56.5415,"W 87°39'26.37320""",West,10/22/2024 11:07:00,20,16.2,28.3,Yes,10,18.9,East,Outdoor,Ground Level
+60,RCH9,Cuneo Hall,N 41°59'55.844,"W 87°39'28.2969""",South,10/22/2024 11:09:00,20.5,14.1,21.8,Door,10,18.9,East,Outdoor,Ground Level
+61,RCH10,Cuneo Hall,N 41°59'57.5924,"W 87°39'25.934""",East,10/22/2024 11:11:00,18.5,11.1,22.1,Door,10,18.9,East,Outdoor,Ground Level
+62,RCH11,Cuneo Hall,N 41°59'57.7451,"W 87°39'27.4165""",North,10/22/2024 11:12:00,20.4,12.1,22.5,Door,10,18.9,East,Outdoor,Ground Level
+63,RDH6,Dumbach Hall,N 42°0'1.2579,"W 87°39'27.5758""",East,10/22/2024 11:15:00,13.2,12.8,26.8,Door,10,18.9,East,Outdoor,Ground Level
+64,RDH7,Dumbach Hall,N 42°0'2.4291,"W 87°39'28.5957""",North,10/22/2024 11:16:00,18.8,14.7,19.3,Door,10,18.9,East,Outdoor,Ground Level
+65,RDH8,Dumbach Hall,N 42°0'2.4431,"W 87°39'28.6533""",North,10/22/2024 11:16:00,15.8,10.3,17.4,Yes,10,18.9,East,Outdoor,Ground Level
