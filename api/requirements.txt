@@ -1,3 +1,4 @@
 Flask==3.0.2
 flask-sqlalchemy==3.1.1
 SQLAlchemy==2.0.28
+Flask-Cors==5.0.0

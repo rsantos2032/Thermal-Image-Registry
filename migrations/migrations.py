@@ -7,13 +7,16 @@ import argparse
 import pandas as pd
 from datetime import datetime
 import os 
+import shutil
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-l', '--logfile', help='Upload new log file to migrate', required=False)
+parser.add_argument("-l", "--logfile", help="Upload new log file to migrate", required=False)
+parser.add_argument("-i", "--imagedirectory", help="Upload image folder to migrate", required=False)
 args = vars(parser.parse_args())
 
-path = "api/database/app.db"
-conn = sqlite3.connect(path)
+log_path = "api/database/app.db"
+image_path = "api/uploads/"
+conn = sqlite3.connect(log_path)
 cursor = conn.cursor()
 
 cursor.execute('''
@@ -37,18 +40,21 @@ cursor.execute('''
 ''')
 conn.commit()
 
-logfiles = os.listdir('migrations/')
-logfiles = ['migrations/' + x for x in logfiles if ".csv" in x]
+migrations_dir = os.listdir('migrations/')
+log_files = ["migrations/" + x for x in migrations_dir if ".csv" in x]
+image_directories = ["migrations/" + x + "/" for x in migrations_dir if "_Hall" in x]
 
 if args['logfile']:
-    logfiles.append(args['logfile'])
+    log_files.append(args['logfile'])
+if args['imagedirectory']:
+    image_directories.append(args['imagedirectory'])
     
-for logfile in logfiles:
-    logfile_df = pd.read_csv(logfile)
-    logfile_df = logfile_df.dropna()
-    logfile_df.columns = logfile_df.iloc[0]
-    logfile_df = logfile_df[1:]
-    for index, row in logfile_df.iterrows():
+for log in log_files:
+    log_df = pd.read_csv(log)
+    log_df = log_df.dropna()
+    log_df.columns = log_df.iloc[0]
+    log_df = log_df[1:]
+    for index, row in log_df.iterrows():
         dt_obj = datetime.strptime(row[6], '%m/%d/%Y %H:%M:%S')
         formatted_datetime = dt_obj.strftime('%Y-%m-%d %H:%M:%S')
         cursor.execute('''
@@ -56,7 +62,13 @@ for logfile in logfiles:
             (photo_id, building_name, latitude, longitude, building_side, time, observed_temp, min_temp, 
             max_temp, frame, distance, outdoor_temp, sun_direction, position, floor)
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(photo_id) DO NOTHING
-            ''', (row[1], row[2], row[3], row[4], row[5], formatted_datetime, float(row[7]), 
+            ''', (row[1], row[2], row[3], row[4], row[5], dt_obj, float(row[7]), 
                   float(row[8]), float(row[9]), row[10], float(row[11]), float(row[12]), row[13], row[14], row[15]))
+        
+for dir in image_directories:
+    for filename in os.scandir(dir):
+        curr_directory = os.getcwd()
+        shutil.copy(os.path.join(*[curr_directory, filename]), os.path.join(*[curr_directory, "api/uploads/"]))         
+    
 conn.commit()
 conn.close()
