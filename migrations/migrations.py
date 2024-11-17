@@ -35,7 +35,8 @@ cursor.execute('''
     outdoor_temp NUMERIC,
     sun_direction CHAR(12),
     position CHAR(8),
-    floor TEXT
+    floor TEXT,
+    notes TEXT
     )
 ''')
 conn.commit()
@@ -55,15 +56,16 @@ for log in log_files:
     log_df.columns = log_df.iloc[0]
     log_df = log_df[1:]
     for index, row in log_df.iterrows():
+        notes = " " if len(row) < 17 else row[16]
         dt_obj = datetime.strptime(row[6], '%m/%d/%Y %H:%M:%S')
         formatted_datetime = dt_obj.strftime('%Y-%m-%d %H:%M:%S')
         cursor.execute('''
             INSERT INTO log_information 
             (photo_id, building_name, latitude, longitude, building_side, time, observed_temp, min_temp, 
-            max_temp, frame, distance, outdoor_temp, sun_direction, position, floor)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(photo_id) DO NOTHING
+            max_temp, frame, distance, outdoor_temp, sun_direction, position, floor, notes)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(photo_id) DO NOTHING
             ''', (row[1], row[2], row[3], row[4], row[5], dt_obj, float(row[7]), 
-                  float(row[8]), float(row[9]), row[10], float(row[11]), float(row[12]), row[13], row[14], row[15]))
+                  float(row[8]), float(row[9]), row[10], float(row[11]), float(row[12]), row[13], row[14], row[15], notes))
         
 for dir in image_directories:
     for filename in os.scandir(dir):

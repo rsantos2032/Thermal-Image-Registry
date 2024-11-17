@@ -49,10 +49,23 @@
     box-sizing: border-box;
 }
 
+.logform textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
 .logform input[type="text"]:focus,
 .logform input[type="number"]:focus,
 .logform input[type="datetime-local"]:focus,
 .logform input[type="file"]:focus,
+.logform textarea:focus,
 .logform select:focus {
     border-color: #007bff;
     outline: none;
@@ -62,6 +75,7 @@
 .logform input[type="number"]:hover,
 .logform input[type="datetime-local"]:hover,
 .logform input[type="file"]:hover,
+.logform textarea:hover,
 .logform select:hover {
     border-color: #007bff;
 }

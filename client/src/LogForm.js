@@ -19,6 +19,7 @@ const LogForm = () => {
         sunDirection: "1",
         position: "1",
         floor: "1",
+        notes: "",
         image: null
     });
 
@@ -318,6 +319,18 @@ const LogForm = () => {
                             <option value="3">Third Floor</option>
                             <option value="4">Fourth Floor</option>
                         </select>
+                    </label>
+                </div>
+
+                {/* Notes */}
+                <div>
+                    <label>Additional Notes:
+                        <textarea
+                            name="notes"
+                            value={formData.notes}
+                            onChange={handleChange}
+                            placeholder="Enter Notes" 
+                        />
                     </label>
                 </div>
 

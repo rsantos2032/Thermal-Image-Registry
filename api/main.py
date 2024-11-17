@@ -76,6 +76,7 @@ def add_log_information():
             sun_direction = constants.SUN_DIRECTION[request.form["sunDirection"]],
             position = constants.POSITION[request.form["position"]],
             floor = constants.FLOOR[request.form["floor"]],
+            notes = request.form["notes"]
         )
 
         db.session.add(log_info)
