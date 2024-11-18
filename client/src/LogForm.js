@@ -230,7 +230,7 @@ const LogForm = () => {
 
                 {/* Frame */}
                 <div>
-                    <label>Frame Properly?:  
+                    <label>Framed Properly?:  
                         <select
                             name="frame" 
                             value={formData.frame} 
@@ -329,7 +329,6 @@ const LogForm = () => {
                             name="notes"
                             value={formData.notes}
                             onChange={handleChange}
-                            placeholder="Enter Notes" 
                         />
                     </label>
                 </div>
