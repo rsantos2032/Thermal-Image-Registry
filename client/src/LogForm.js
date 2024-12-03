@@ -1,7 +1,7 @@
+import axios from "axios";
 import { useState } from "react";
-import Navbar from "./Navbar";
 import "./LogForm.css";
-import axios from "axios"
+import Navbar from "./Navbar";
 
 const LogForm = () => {
     const [formData, setFormData] = useState({
@@ -67,6 +67,7 @@ const LogForm = () => {
         form.append("outdoorTemp", formData.outdoorTemp);
         form.append("sunDirection", formData.sunDirection);
         form.append("position", formData.position);
+        form.append("notes", formData.notes);
         form.append("floor", formData.floor);
 
         console.log(formData);
@@ -75,7 +76,8 @@ const LogForm = () => {
         }
 
         try{
-            await axios.post("http://localhost:5000/log_information", form, {
+            const appURL = process.env.REACT_APP_API_URL;
+            await axios.post(`${appURL}/log_information`, form, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 },
@@ -97,6 +99,7 @@ const LogForm = () => {
                 sunDirection: "1",
                 position: "1",
                 floor: "1",
+                notes: "",
                 image: null
             });
         } catch(error){

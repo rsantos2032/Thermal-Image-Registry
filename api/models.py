@@ -20,6 +20,7 @@ class LogInformation(db.Model):
     sun_direction = db.Column(db.String(12))
     position = db.Column(db.String(8))
     floor = db.Column(db.Text)
+    notes = db.Column(db.Text)
 
     def __repr__(self):
         return f'<LogInformation {self.photo_id}>'

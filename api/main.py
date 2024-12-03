@@ -68,7 +68,7 @@ def download_csv():
     csv_writer.writerow([
         "Photo ID", "Building Name", "Latitude", "Longitude", "Side of Building", 
         "Date and Time", "Observed Temp", "Min Temp", "Max Temp", "Framed Properly?", 
-        "Distance", "Outdoor Temp", "Sun Direction", "Indoor/Outdoor", "Floor"
+        "Distance", "Outdoor Temp", "Sun Direction", "Indoor/Outdoor", "Floor", "Notes"
     ])
 
     for log in logs:
@@ -77,19 +77,31 @@ def download_csv():
         csv_writer.writerow([
             log.photo_id, log.building_name, log.latitude, log.longitude, log.building_side,
             formatted_datetime, log.observed_temp, log.min_temp, log.max_temp, log.frame,
-            log.distance, log.outdoor_temp, log.sun_direction, log.position, log.floor
+            log.distance, log.outdoor_temp, log.sun_direction, log.position, log.floor, log.notes
         ])
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=log_information.csv"
     output.headers["Content-type"] = "text/csv"
     return output
 
-# @app.route("/download_images")
-# def download_images():
-#     time_str = time.strftime("%Y%m%d-%H%M%S")
-#     filename = "thermal_images.zip".format(time_str)
-#     memory_file = io.BytesIO
-#     with zipfile.ZipFile(memory_file, "w", zipfile.ZIP_DEFLATED) as zipf:
+@app.route("/download_images")
+def download_images():
+    time_str = time.strftime("%Y%m%d-%H%M%S")
+    filename = "thermal_images_{}.zip".format(time_str)
+    uploads_path = app.config["UPLOAD_FOLDER"]
+    memory_file = io.BytesIO()
+    with zipfile.ZipFile(memory_file, "w", zipfile.ZIP_DEFLATED) as zipf:
+        for file in os.listdir(uploads_path):
+            full_path = os.path.join(uploads_path, file)
+            zipf.write(full_path, file)
+            
+    memory_file.seek(0)
+    return send_file(
+        memory_file,
+        as_attachment=True,
+        download_name=filename,
+        mimetype='application/zip'
+    )
         
  
         
@@ -127,7 +139,7 @@ def add_log_information():
             sun_direction = constants.SUN_DIRECTION[request.form["sunDirection"]],
             position = constants.POSITION[request.form["position"]],
             floor = constants.FLOOR[request.form["floor"]],
-            notes = request.form["notes"]
+            notes = request.form.get("notes", "")
         )
 
         db.session.add(log_info)
@@ -161,9 +173,36 @@ def get_log_information():
             "sun_direction": log.sun_direction,
             "position": log.position,
             "floor": log.floor,
+            "notes": log.notes,
             "image_path": get_image(log.photo_id)
         })
     
+    return jsonify(logs_list)
+
+@app.route('/')
+def index():
+    all_logs = LogInformation.query.all()
+    logs_list = []
+
+    for log in all_logs:
+        logs_list.append({
+            'photo_id': log.photo_id,
+            'building_name': log.building_name,
+            'latitude': log.latitude,
+            'longitude': log.longitude,
+            'building_side': log.building_side,
+            'time': log.time.isoformat() if log.time else None,
+            'observed_temp': float(log.observed_temp) if log.observed_temp is not None else None,
+            'min_temp': float(log.min_temp) if log.min_temp is not None else None,
+            'max_temp': float(log.max_temp) if log.max_temp is not None else None,
+            'frame': log.frame,
+            'distance': float(log.distance) if log.distance is not None else None,
+            'outdoor_temp': float(log.outdoor_temp) if log.outdoor_temp is not None else None,
+            'sun_direction': log.sun_direction,
+            'position': log.position,
+            'floor': log.floor,
+            'notes': log.notes
+        })
     return jsonify(logs_list)
 
 if __name__ == "__main__":

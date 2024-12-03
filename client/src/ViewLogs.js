@@ -1,7 +1,7 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import "./ViewLogs.css"
-import axios from "axios";
+import "./ViewLogs.css";
 
 const ViewLogs = () => {
     const [logs, setLogs] = useState([]);
@@ -9,7 +9,8 @@ const ViewLogs = () => {
     useEffect(() => {
         const fetchLogs = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/log_information");
+		        const appURL = process.env.REACT_APP_API_URL;
+                const response = await axios.get(`${appURL}/log_information`);
                 setLogs(response.data);
             } catch (error) {
                 console.error("Error fetching log data:", error);
@@ -23,7 +24,8 @@ const ViewLogs = () => {
     const handleExportCSV = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.get("http://localhost:5000/download_csv", {
+	        const appURL = process.env.REACT_APP_API_URL;
+            const response = await axios.get(`${appURL}/download_csv`, {
                 responseType: "blob"
             });
             
@@ -38,9 +40,30 @@ const ViewLogs = () => {
         }
     };
 
+    const handleExportImages = async (e) => {
+        e.preventDefault();
+        try {
+            const appURL = process.env.REACT_APP_API_URL;
+            const response = await axios.get(`${appURL}/download_images`, {
+                responseType: "blob"
+            });
+    
+            const blob = response.data;
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "thermal_images.zip";
+            link.click();
+            URL.revokeObjectURL(link.href);
+        } catch (error) {
+            console.error("There was an error downloading the images", error);
+            alert("Error downloading image ZIP file.");
+        }
+    };
+
     const openImagePopup = (e, imagePath) => {
         e.preventDefault();
-        const imageURL = `http://localhost:5000${imagePath}`;
+	    const appURL = process.env.REACT_APP_API_URL;
+        const imageURL = `${appURL}${imagePath}`;
         window.open(imageURL, "_blank");
     };
 
@@ -68,6 +91,7 @@ const ViewLogs = () => {
                         <th>Sun Direction</th>
                         <th>Indoor/Outdoor</th>
                         <th>Floor</th>
+	    		        <th>Notes</th>
                         <th>Image</th>
                     </tr>
                     </thead>
@@ -89,6 +113,7 @@ const ViewLogs = () => {
                             <td>{log.sun_direction}</td>
                             <td>{log.position}</td>
                             <td>{log.floor}</td>
+			                <td>{log.notes}</td>
                             <td>
                                 <a href="#" onClick={(e) => openImagePopup(e, log.image_path)}>
                                     View Image
@@ -101,7 +126,7 @@ const ViewLogs = () => {
             </div>
             <div className="exportbuttons">
                 <button onClick={handleExportCSV}>Export CSV</button>
-                <button>Export Images</button>
+                <button onClick={handleExportImages}>Export Images</button>
             </div>
         </div>
     );
