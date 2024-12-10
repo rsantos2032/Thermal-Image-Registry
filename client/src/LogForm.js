@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 
 const LogForm = () => {
     const [formData, setFormData] = useState({
-        buildingName: "1",
+        buildingName: "",
         latitude: "",
         longitude: "",
         buildingSide: "1",
@@ -103,7 +103,14 @@ const LogForm = () => {
                 image: null
             });
         } catch(error){
-            alert("Error submitting the form. Please try again.")
+            if (error.response) {
+                alert(`Error: ${error.response.data.error || "Something went wrong."}`);
+                console.error(error.response.data.error)
+            } else if (error.request) {
+                alert("No response from the server. Please check your connection.");
+            } else {
+                alert(`Error: ${error.message}`);
+            }
         }
     };
 
@@ -115,15 +122,14 @@ const LogForm = () => {
                 {/* Building Name */}
                 <div>
                     <label>Building Name:  
-                        <select
+                        <input
+                            type="text"
                             name="buildingName" 
                             value={formData.buildingName} 
-                            onChange={handleChange} 
+                            onChange={handleChange}
+                            placeholder="Enter Building Name"
                             required
-                        >
-                            <option value="1">Cuneo Hall</option>
-                            <option value="2">Dumbach Hall</option>
-                        </select>
+                        />
                     </label>
                 </div>
 
@@ -142,7 +148,7 @@ const LogForm = () => {
 
                 {/* Longitude */}
                  <div>
-                    <label>Latitude:
+                    <label>Longitude:
                         <input
                             type="text"
                             name="longitude"
@@ -160,7 +166,6 @@ const LogForm = () => {
                             name="buildingSide" 
                             value={formData.buildingSide} 
                             onChange={handleChange} 
-                            required
                         >
                             <option value="1">East</option>
                             <option value="2">West</option>
@@ -238,7 +243,6 @@ const LogForm = () => {
                             name="frame" 
                             value={formData.frame} 
                             onChange={handleChange} 
-                            required
                         >
                             <option value="1">Yes</option>
                             <option value="2">No</option>
@@ -273,6 +277,7 @@ const LogForm = () => {
                             placeholder="Enter temperature in °C"
                             min="-100"
                             max="100"
+                            required
                         />
                     </label>
                 </div>
@@ -284,7 +289,6 @@ const LogForm = () => {
                             name="sunDirection" 
                             value={formData.sunDirection} 
                             onChange={handleChange} 
-                            required
                         >
                             <option value="1">East</option>
                             <option value="2">West</option>
@@ -315,7 +319,6 @@ const LogForm = () => {
                             name="floor" 
                             value={formData.floor} 
                             onChange={handleChange} 
-                            required
                         >
                             <option value="1">Ground Level</option>
                             <option value="2">Second Floor</option>
@@ -343,7 +346,6 @@ const LogForm = () => {
                         type="file"
                         name="image"
                         accept="image/*"
-                        required
                         onChange={handleImageChange}
                     />
                     {formData.image && (

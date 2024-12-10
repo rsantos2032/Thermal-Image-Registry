@@ -1,8 +1,3 @@
-BUILDING_NAME = {
-    "1": "Cuneo Hall",
-    "2": "Dumbach Hall"
-}
-
 BUILDING_SIDE = {
     "1": "East",
     "2": "West",

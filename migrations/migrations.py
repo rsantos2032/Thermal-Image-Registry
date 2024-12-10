@@ -22,7 +22,7 @@ cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS log_information (
     photo_id CHAR(6) PRIMARY KEY,
-    building_name CHAR(12),
+    building_name TEXT,
     latitude TEXT,
     longitude TEXT,
     building_side CHAR(5),
@@ -74,3 +74,5 @@ for dir in image_directories:
     
 conn.commit()
 conn.close()
+
+print("Migration Completed.")

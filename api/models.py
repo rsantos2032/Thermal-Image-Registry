@@ -6,7 +6,7 @@ class LogInformation(db.Model):
     __tablename__ = 'log_information'
 
     photo_id = db.Column(db.String(6), primary_key=True)
-    building_name = db.Column(db.String(12))
+    building_name = db.Column(db.Text)
     latitude = db.Column(db.Text)
     longitude = db.Column(db.Text)
     building_side = db.Column(db.String(5))

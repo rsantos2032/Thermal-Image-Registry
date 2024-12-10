@@ -1,25 +1,39 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import FormUpdateModal from "./FormUpdateModal";
 import Navbar from "./Navbar";
 import "./ViewLogs.css";
+import XButton from "./red-x-icon.svg"
 
 const ViewLogs = () => {
     const [logs, setLogs] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedPhotoId, setSelectedPhotoId] = useState("");
+
+    const fetchLogs = async () => {
+        try {
+            const appURL = process.env.REACT_APP_API_URL;
+            const response = await axios.get(`${appURL}/log_information`);
+            setLogs(response.data);
+        } catch (error) {
+            console.error("Error fetching log data:", error);
+            alert("Failed to load log information");
+        }
+    }
 
     useEffect(() => {
-        const fetchLogs = async () => {
-            try {
-		        const appURL = process.env.REACT_APP_API_URL;
-                const response = await axios.get(`${appURL}/log_information`);
-                setLogs(response.data);
-            } catch (error) {
-                console.error("Error fetching log data:", error);
-                alert("Failed to load log information");
-            }
-        }
-
         fetchLogs();
     }, []);
+
+    const openModal = (photoId) => {
+        setSelectedPhotoId(photoId);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedPhotoId("");
+    };
 
     const handleExportCSV = async (e) => {
         e.preventDefault();
@@ -37,6 +51,23 @@ const ViewLogs = () => {
         } catch (error) {
             console.error("There was an error getting the data", error);
             alert("Error downlading CSV file.");
+        }
+    };
+
+    const handleDelete = async (photoId) => {
+        if (!window.confirm("Are you sure you want to delete this log?")) {
+            return;
+        }
+
+        try {
+            const appURL = process.env.REACT_APP_API_URL;
+            await axios.delete(`${appURL}/log_information/${photoId}`);
+            alert("Log deleted successfully!");
+
+            setLogs((prevLogs) => prevLogs.filter((log) => log.photo_id !== photoId));
+        } catch (error) {
+            console.error("Error deleting the log:", error);
+            alert("Failed to delete the log. Please try again.");
         }
     };
 
@@ -115,15 +146,34 @@ const ViewLogs = () => {
                             <td>{log.floor}</td>
 			                <td>{log.notes}</td>
                             <td>
-                                <a href="#" onClick={(e) => openImagePopup(e, log.image_path)}>
-                                    View Image
-                                </a>
+                                {log.image_path ? (
+                                    <a href="#" onClick={(e) => openImagePopup(e, log.image_path)}>
+                                        View Image
+                                    </a>
+                                ) : (
+                                    <a href="#" onClick={() => openModal(log.photo_id)}>
+                                        Add Image
+                                    </a>
+                                )}
+                            </td>
+                            <td>
+                                <button 
+                                    onClick={() => handleDelete(log.photo_id)}
+                                    className="delete-button">
+                                    <img src={XButton} alt="Delete" />
+                                </button>
                             </td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
             </div>
+            <FormUpdateModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                photoId={selectedPhotoId}
+                onUploadSuccess={fetchLogs}
+            />
             <div className="exportbuttons">
                 <button onClick={handleExportCSV}>Export CSV</button>
                 <button onClick={handleExportImages}>Export Images</button>
