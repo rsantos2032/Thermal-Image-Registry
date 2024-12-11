@@ -6,14 +6,14 @@ import io
 import time
 import zipfile
 
-from flask import Flask, Response, jsonify, make_response, send_from_directory, send_file, request
+from flask import Flask, Response, jsonify, make_response, send_from_directory, send_file, request, render_template
 from flask_cors import CORS
 from models import db, LogInformation
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import BadRequest
 from datetime import datetime
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="static_templates/")
 CORS(app)
 
 @app.after_request
@@ -230,8 +230,7 @@ def upload_image():
 
 @app.route('/')
 def index():
-    # TODO: Add Documentation HTML or Markdown here
-    return
+    return render_template("api.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

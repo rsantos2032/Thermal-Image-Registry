@@ -1,0 +1,226 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h2 id="api-backend-">API (Backend)</h2>
+<p>This API provides functionality for managing log information and associated images for building temperature monitoring. It allows you to:</p>
+<ul>
+<li>Add new log information along with images.</li>
+<li>Retrieve log information.</li>
+<li>Delete log entries and associated images.</li>
+<li>Download logs and images as CSV or ZIP files.</li>
+</ul>
+<p>In additon the API contains application logic and utilities such as:</p>
+<ul>
+<li>Unique ID generation.</li>
+<li>Database and image storage.</li>
+<li>Database Model information.</li>
+</ul>
+<h3 id="environment-setup-">Environment Setup:</h3>
+<p>To run this application, you need the following:</p>
+<ol>
+<li>Python 3.x</li>
+<li>Flask</li>
+<li>SQLAlchemy</li>
+<li>Flask-CORS</li>
+</ol>
+<p>Most of the environment setup will be done by docker upon container creation.</p>
+<h3 id="endpoints">Endpoints</h3>
+<h4 id="1-log_information-get-">1. <code>/log_information</code> (GET)</h4>
+<ul>
+<li><strong>Description</strong>: Retrieves all log information from the database.</li>
+<li><strong>Response</strong>: A list of logs with details such as photo ID, building name, latitude, longitude, and observed temperature.</li>
+<li><strong>Example Response</strong>:
+```json
+[
+  {<pre><code><span class="hljs-string">"photo_id"</span>: <span class="hljs-string">"CH01"</span>,
+<span class="hljs-string">"building_name"</span>: <span class="hljs-string">"Cuneo Hall"</span>,
+<span class="hljs-string">"latitude"</span>: <span class="hljs-string">"N 41°59'</span><span class="hljs-number">58.6959</span><span class="hljs-string">",
+"</span>longitude<span class="hljs-string">": "</span>W <span class="hljs-number">87</span>°<span class="hljs-number">39</span><span class="hljs-string">'26.68310"</span>,
+<span class="hljs-string">"building_side"</span>: <span class="hljs-string">"North"</span>,
+<span class="hljs-string">"time"</span>: <span class="hljs-string">"2024-10-01 02:29:00 PM"</span>,
+<span class="hljs-string">"observed_temp"</span>: <span class="hljs-number">25.0</span>,
+<span class="hljs-string">"min_temp"</span>: <span class="hljs-number">22.0</span>,
+<span class="hljs-string">"max_temp"</span>: <span class="hljs-number">28.0</span>,
+<span class="hljs-string">"frame"</span>: <span class="hljs-string">"Door"</span>,
+<span class="hljs-string">"distance"</span>: <span class="hljs-number">10</span>,
+<span class="hljs-string">"outdoor_temp"</span>: <span class="hljs-number">18.8</span>,
+<span class="hljs-string">"sun_direction"</span>: <span class="hljs-string">"West"</span>,
+<span class="hljs-string">"position"</span>: <span class="hljs-string">"Outdoor"</span>,
+<span class="hljs-string">"floor"</span>: <span class="hljs-string">"Ground Level"</span>,
+<span class="hljs-string">"notes"</span>: <span class="hljs-string">"Insect on window when image was taken"</span>
+</code></pre>  }
+]</li>
+</ul>
+<h4 id="2-log_information-post-">2. <code>/log_information</code> (POST)</h4>
+<ul>
+<li><strong>Description</strong>: Adds a new log entry to the database along with an optional image.</li>
+<li><strong>Parameters</strong> (Form Data):<ul>
+<li><code>buildingName</code>: The name of the building</li>
+<li><code>latitude</code>: Latitude coordinates of user position when image was taken</li>
+<li><code>longitude</code>: Longitude coordinates of user position when image was taken</li>
+<li><code>time</code>: The time of the observation (<code>YYYY-MM-DDTHH:MM</code> format)</li>
+<li><code>observedTemp</code>: The observed temperature from the IR camera</li>
+<li><code>minTemp</code>: The minimum temperature of image captured from IR camera</li>
+<li><code>maxTemp</code>: The maximum temperature of image captured from IR camera</li>
+<li><code>frame</code>: Window/Door framing; Yes/No if window was framed properly when image was taken</li>
+<li><code>distance</code>: Distance recorded on IR camera settings</li>
+<li><code>outdoorTemp</code>: Outdoor Temperature (from weather app)</li>
+<li><code>sunDirection</code>: Direction of sun when image was taken.</li>
+<li><code>position</code>: Whether user took image indoors or outdoors</li>
+<li><code>floor</code>: The floor the window/door image was taken from</li>
+<li><code>notes</code>: Additional notes</li>
+</ul>
+</li>
+<li><strong>Response</strong> A success message confirming the log has been added.</li>
+</ul>
+<h4 id="3-log_information-photo_id-delete-">3. <code>/log_information/&lt;photo_id&gt;</code> (DELETE)</h4>
+<ul>
+<li><strong>Description</strong>: Deletes the log entry and associated image (if found) by the <code>photo_id</code>.</li>
+<li><strong>Parameters</strong>:<ul>
+<li><code>photo_id</code>: The ID of the log and photo entry to be deleted.</li>
+</ul>
+</li>
+<li><strong>Response</strong>: A success message or an error message if the log is not found.</li>
+</ul>
+<h4 id="4-download_csv-get-">4. <code>/download_csv</code> (GET)</h4>
+<ul>
+<li><strong>Description</strong>:  Downloads a CSV file containing all the log entries.</li>
+<li><strong>Response</strong>: A CSV file containing the log information.</li>
+</ul>
+<h4 id="5-download_images-get-">5. <code>download_images</code> (GET)</h4>
+<ul>
+<li><strong>Description</strong>: Downloads a ZIP file containing all uploaded images.</li>
+<li><strong>Response</strong>: A ZIP file containing all images.</li>
+</ul>
+<h4 id="6-upload_image-post-">6. <code>upload_image</code> (POST)</h4>
+<ul>
+<li><strong>Description</strong>: Uploads a new image for a specific photo ID.</li>
+<li><strong>Parameters</strong> (Form Data):<ul>
+<li><code>photo_id</code>: The photo ID for which the image is being uploaded.</li>
+<li><code>image</code>: The image file to upload</li>
+</ul>
+</li>
+<li><strong>Response</strong>: A success message confirming the image upload.</li>
+</ul>
+<h4 id="7-uploads-filename-get-">7. <code>/uploads/&lt;filename&gt;</code> (GET)</h4>
+<ul>
+<li><strong>Description</strong>: Serves the uploaded image based on the filename.</li>
+<li><strong>Parameters</strong>:<ul>
+<li><code>filname</code>: The name of the file to retrieve (the photo ID).</li>
+</ul>
+</li>
+<li><strong>Response</strong>: The image file.</li>
+</ul>
+<h3 id="application-logic">Application Logic</h3>
+<h4 id="1-generate_id-building_name-">1. <code>generate_id(building_name)</code></h4>
+<ul>
+<li><strong>Description</strong>: Generates a unique photo ID based on the building&#39;s name and the latest photo ID in the database for that building.</li>
+<li><strong>Input</strong> <code>building_name</code> (string) - The name of the building</li>
+<li><strong>Output</strong> <code>new_id</code> (string) - A newly generated unique photo ID.</li>
+</ul>
+<h4 id="2-get_image-photo_id-">2. <code>get_image(photo_id)</code></h4>
+<ul>
+<li><strong>Description</strong>: Retrieves the image path fora  given <code>photo_id</code>.</li>
+<li><strong>Input</strong> <code>photo_id</code> (string) - The photo ID of the log entry.</li>
+<li><strong>Output</strong>: A URL to the image file or <code>None</code> if no image is found.</li>
+</ul>
+<h3 id="models">Models</h3>
+<h4 id="-log-information-model"><code>Log Information</code> Model</h4>
+<p>The <code>Log Information</code> Model represents a single log entry, including thermal image data and associated metadata.</p>
+<table>
+<thead>
+<tr>
+<th>Column Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>photo_id</code></td>
+<td>String(6)</td>
+<td>Primary key; unique identifier for the log.</td>
+</tr>
+<tr>
+<td><code>building_name</code></td>
+<td>Text</td>
+<td>The name of the building where the log was recorded.</td>
+</tr>
+<tr>
+<td><code>latitude</code></td>
+<td>Text</td>
+<td>Latitude coordinates of the user position when the image was taken.</td>
+</tr>
+<tr>
+<td><code>longitude</code></td>
+<td>Text</td>
+<td>Longitude coordinates of the user position when the image was taken.</td>
+</tr>
+<tr>
+<td><code>building_side</code></td>
+<td>String(5)</td>
+<td>Side of the building (e.g., North, South).</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td>DateTime</td>
+<td>The time of the observation in <code>YYYY-MM-DDTHH:MM</code> format.</td>
+</tr>
+<tr>
+<td><code>observed_temp</code></td>
+<td>Numeric</td>
+<td>The observed temperature from the IR camera.</td>
+</tr>
+<tr>
+<td><code>min_temp</code></td>
+<td>Numeric</td>
+<td>The minimum temperature of the image captured by the IR camera.</td>
+</tr>
+<tr>
+<td><code>max_temp</code></td>
+<td>Numeric</td>
+<td>The maximum temperature of the image captured by the IR camera.</td>
+</tr>
+<tr>
+<td><code>frame</code></td>
+<td>String(12)</td>
+<td>Window/Door framing; Yes/No if window was framed properly when the image was taken.</td>
+</tr>
+<tr>
+<td><code>distance</code></td>
+<td>Numeric</td>
+<td>Distance recorded on IR camera settings.</td>
+</tr>
+<tr>
+<td><code>outdoor_temp</code></td>
+<td>Numeric</td>
+<td>Outdoor temperature (from weather app) at the time of observation.</td>
+</tr>
+<tr>
+<td><code>sun_direction</code></td>
+<td>String(12)</td>
+<td>Direction of the sun when the image was taken.</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td>String(8)</td>
+<td>Whether the image was taken indoors or outdoors.</td>
+</tr>
+<tr>
+<td><code>floor</code></td>
+<td>Text</td>
+<td>The floor the window/door image was taken from.</td>
+</tr>
+<tr>
+<td><code>notes</code></td>
+<td>Text</td>
+<td>Additional notes.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="database">Database</h3>
+<ul>
+<li><strong>Database File</strong>: <code>app.db</code> located under <code>api/database/</code> is the SQLite database used for this project where log information is stored.</li>
+<li><strong>Image Directory</strong>: All uploaded thermal images are stored in the <code>api/uploads/</code> directory.</li>
+</ul>
+</body></html>

@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+## Client (Frontend)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This frontend client application interacts with the backend API to manage and display thermal log data and images. It provides the following functionality for users:
 
-## Available Scripts
+### Features:
 
-In the project directory, you can run:
+#### 1. Log Form Submission:
+- Users can submit new thermal log data, including details such as building name, coordinates, temperature readings and additional notes.
+- (OPTIONAL) Users can upload images associated with the log data.
 
-### `npm start`
+#### 2. View Logs:
+- Displays a table of all available logs retrieved from the API.
+- Users can view individual thermal images associated with each log.
+- Allows users to delete logs and images directly from the interface.
+- If a user did not upload an image for their log yet, they may do so here.
+- Provides options to export log data in CSV format and images in a ZIP file.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Environment Setup:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### `npm install`
 
-### `npm test`
+To run this application, `Node.js` is required. If project is downloaded from Github, the `/node_modules/` folder may not be present in the `/client` directory. If this is the case, please run `npm install` from **WITHIN** the `/client/` folder. To navigate to the `client/` directory and run `npm install` in one command from the main project directory, use the following bash script:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+cd client/ && npm install
+```
 
-### `npm run build`
+#### `.env`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For backend connection to work, the project IP address must be adjusted in the `.env` file. If no `.env` file is present, copy and paste the URI from the provided `.env.example` and create a new `.env` file in the same directory. To test the application on your local machine. Change the `REACT_APP_API_URL=http://IP_ADDRESS:5000` to `REACT_APP_API_URL=http://localhost:5000`.
