@@ -1,5 +1,7 @@
 # Loyola Thermal Image Project
 
+Hello World
+
 ## Project Setup
 
 This project utilizes Docker and Docker Compose to manage both the frontend (client) and backend (API) services. Docker Desktop is recommended for local machines to run the project without issue.
