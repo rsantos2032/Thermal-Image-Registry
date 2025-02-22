@@ -1,6 +1,10 @@
 # Loyola Thermal Image Project
 
+<<<<<<< HEAD
 Cha cha cha
+=======
+FizzBuzz 2
+>>>>>>> caf8a70db09bad2d3aa4b50a9b9eb0c457b0039a
 
 ## Project Setup
 
