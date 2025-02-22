@@ -1,6 +1,6 @@
 # Loyola Thermal Image Project
 
-FizzBuzz
+FizzBuzz 2
 
 ## Project Setup
 
