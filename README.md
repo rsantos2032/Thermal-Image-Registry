@@ -1,6 +1,6 @@
 # Loyola Thermal Image Project
 
-Hello World
+Cha cha cha
 
 ## Project Setup
 
